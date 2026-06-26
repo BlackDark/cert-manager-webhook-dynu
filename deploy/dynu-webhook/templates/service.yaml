@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "dynu-webhook.fullname" . }}
+  labels:
+{{ include "dynu-webhook.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: https
+      protocol: TCP
+      name: https
+  selector:
+{{ include "dynu-webhook.matchLabels" . | indent 4 }}

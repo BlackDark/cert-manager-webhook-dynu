@@ -1,0 +1,12 @@
+.git
+.github
+bin
+_out
+_test
+.gocache
+.gomodcache
+.gopath
+README.md
+LICENSE
+examples
+testdata

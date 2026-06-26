@@ -1,0 +1,60 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    // Includes: config:recommended, docker:pinDigests,
+    // helpers:pinGitHubActionDigests, :maintainLockFilesWeekly,
+    // :configMigration, abandonments:recommended
+    "config:best-practices",
+  ],
+  labels: ["dependencies"],
+  schedule: ["before 6am on monday"],
+  packageRules: [
+    // Automerge all minor, patch, pin and digest updates
+    {
+      matchUpdateTypes: [
+        "minor",
+        "patch",
+        "pin",
+        "digest",
+        "lockFileMaintenance",
+      ],
+      automerge: true,
+    },
+    // Bundle all go module non-major updates into one PR to reduce noise.
+    // Specific groups below override this for k8s/cert-manager/otel packages.
+    {
+      groupName: "go modules (non-major)",
+      matchManagers: ["gomod"],
+      matchUpdateTypes: ["minor", "patch"],
+    },
+    // GitHub Actions: group all SHA-digest updates into one PR
+    {
+      groupName: "github actions",
+      matchManagers: ["github-actions"],
+      matchUpdateTypes: ["minor", "patch", "digest"],
+    },
+    // Dockerfile base images (e.g. golang:1.26-alpine)
+    {
+      groupName: "docker base images",
+      matchManagers: ["dockerfile"],
+    },
+    // k8s.io/* and sigs.k8s.io/* must move together — keep in one PR
+    {
+      groupName: "kubernetes dependencies",
+      matchPackagePrefixes: ["k8s.io/", "sigs.k8s.io/"],
+      matchUpdateTypes: ["minor", "patch"],
+    },
+    // cert-manager packages
+    {
+      groupName: "cert-manager",
+      matchPackagePrefixes: ["github.com/cert-manager/"],
+      matchUpdateTypes: ["minor", "patch"],
+    },
+    // OpenTelemetry packages
+    {
+      groupName: "opentelemetry",
+      matchPackagePrefixes: ["go.opentelemetry.io/"],
+      matchUpdateTypes: ["minor", "patch"],
+    },
+  ],
+}

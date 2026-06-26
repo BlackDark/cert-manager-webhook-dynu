@@ -1,0 +1,16 @@
+apiVersion: v2
+appVersion: "0.0.1"
+description: cert-manager webhook solver for ACME DNS01 challenge via Dynu
+name: dynu-webhook
+version: 0.0.1
+home: https://github.com/blackdark/cert-manager-webhook-dynu
+sources:
+  - https://github.com/blackdark/cert-manager-webhook-dynu
+keywords:
+  - cert-manager
+  - acme
+  - dns01
+  - dynu
+maintainers:
+  - name: blackdark
+    url: https://github.com/blackdark
