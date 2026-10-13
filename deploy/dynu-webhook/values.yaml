@@ -23,7 +23,7 @@ secretsNames: []
 
 image:
   repository: ghcr.io/blackdark/cert-manager-webhook-dynu
-  tag: v0.0.1
+  tag: v0.0.1@sha256:ab050b7dbad2a347502e8653af8b007d93db98522a0750d1a1d205078100bd12
   pullPolicy: IfNotPresent
 
 nameOverride: ""
