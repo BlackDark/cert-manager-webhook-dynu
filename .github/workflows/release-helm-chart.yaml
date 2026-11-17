@@ -66,7 +66,11 @@ jobs:
             --version "$CHART_VERSION" \
             --app-version "$CHART_VERSION" \
             --destination .chart-packages
-          CHART_PACKAGE="$(ls .chart-packages/*.tgz | head -n 1)"
+          CHART_PACKAGE="$(find .chart-packages -maxdepth 1 -type f -name '*.tgz' -print -quit)"
+          if [ -z "$CHART_PACKAGE" ]; then
+            echo "::error::No packaged chart found"
+            exit 1
+          fi
           echo "path=$CHART_PACKAGE" >> "$GITHUB_OUTPUT"
 
       - name: Login to GHCR (OCI)
