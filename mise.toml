@@ -1,2 +1,13 @@
 [tools]
 go = "1.27.4"
+helm = "4.3.2"
+
+[tasks.check]
+description = "Build, test, vet, and Helm lint"
+run = [
+  "test -z \"$(gofmt -l .)\"",
+  "go vet ./...",
+  "go build ./...",
+  "go test ./...",
+  "helm lint deploy/dynu-webhook",
+]
